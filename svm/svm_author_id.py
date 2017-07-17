@@ -10,6 +10,8 @@
     
 import sys
 from time import time
+from sklearn import svm
+from sklearn.metrics import accuracy_score
 sys.path.append("../tools/")
 from email_preprocess import preprocess
 
@@ -24,7 +26,18 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
+clf = svm.SVC(kernel="rbf", C=10000)
+features_train = features_train[:len(features_train)/100] 
+labels_train = labels_train[:len(labels_train)/100] 
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
 
+print accuracy_score(pred, labels_test)
 #########################################################
+chris_emails = []
 
+for i in pred:
+    if i == 1:
+        chris_emails.append(i)
 
+print len(chris_emails)
