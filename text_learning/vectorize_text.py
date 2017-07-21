@@ -7,7 +7,7 @@ import sys
 
 sys.path.append( "../tools/" )
 from parse_out_email_text import parseOutText
-
+from sklearn.feature_extraction.text import TfidfVectorizer, TfidfTransformer, CountVectorizer
 """
     Starter code to process the emails from Sara and Chris to extract
     the features and get the documents ready for classification.
@@ -41,7 +41,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
-        temp_counter += 1
+        #temp_counter += 1
         if temp_counter < 200:
             path = os.path.join('..', path[:-1])
             print path
@@ -55,7 +55,18 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             ### append the text to word_data
 
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
+            delete_words = ["sara", "shackleton", "chris", "germani"]
+            text = parseOutText(email)
 
+            for w in delete_words:
+                text = text.replace(w, "")
+
+            word_data.append(text)
+
+            if name == "sara":
+                from_data.append(0)
+            else:
+                from_data.append(1)
 
             email.close()
 
@@ -66,10 +77,18 @@ from_chris.close()
 pickle.dump( word_data, open("your_word_data.pkl", "w") )
 pickle.dump( from_data, open("your_email_authors.pkl", "w") )
 
+print word_data[152]
 
 
 
 
 ### in Part 4, do TfIdf vectorization here
+vectorizer = TfidfVectorizer(stop_words="english")
+fit = vectorizer.fit_transform(word_data)
+transform = TfidfTransformer()
+tfidf = transform.fit_transform(fit)
 
+info = vectorizer.get_feature_names()
 
+print len(info)
+print info[34597]
