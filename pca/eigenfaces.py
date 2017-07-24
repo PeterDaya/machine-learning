@@ -66,7 +66,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random
 ###############################################################################
 # Compute a PCA (eigenfaces) on the face dataset (treated as unlabeled
 # dataset): unsupervised feature extraction / dimensionality reduction
-n_components = 150
+n_components = 300
 
 print "Extracting the top %d eigenfaces from %d faces" % (n_components, X_train.shape[0])
 t0 = time()
@@ -142,5 +142,10 @@ plot_gallery(X_test, prediction_titles, h, w)
 
 eigenface_titles = ["eigenface %d" % i for i in range(eigenfaces.shape[0])]
 plot_gallery(eigenfaces, eigenface_titles, h, w)
+
+# This part of the program will show PCA info as well
+print "Variance by 1st PC: ", pca.explained_variance_ratio_[0]
+print "Variance by 2nd PC: ", pca.explained_variance_ratio_[1]
+
 
 pl.show()
