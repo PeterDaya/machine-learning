@@ -55,7 +55,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             ### append the text to word_data
 
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-            delete_words = ["sara", "shackleton", "chris", "germani"]
+            delete_words = ["sara", "shackleton", "sshacklensf", "cgermannsf","chris", "germani"]
             text = parseOutText(email)
 
             for w in delete_words:
